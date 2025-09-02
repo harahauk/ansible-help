@@ -1,7 +1,7 @@
 Ansible Installation and execution help
 =======================================
-You can call it a `cheatsheet` or "general-support" for my other modules. This way I can also refer to some things I put/repeat in **all** my modules which isn't so easy to maintain.
-First off check out the [official documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)  
+You can call it a `cheatsheet` or "general-support" for my other modules. Most is derived from the [official documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) which is propably more than enough for most users.   
+This way I can also refer to some things I put/repeat in **all** my modules which isn't so easy to maintain.
 
 # Specifics for Windows
 This only applies if you are running `ansible control nodes`in Windows-environments.  
