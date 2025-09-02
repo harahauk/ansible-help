@@ -8,9 +8,9 @@ This way I can also refer to some things I put/repeat in **all** my modules whic
 # Specifics for Windows
 
 This only applies if you are running `ansible control nodes`in Windows-environments (don't ask).  
-`ansible-vault` has not been good to me on *Windows* claiming 
+`ansible-vault` has not been good to me on *Windows* claiming somethig like this:  
 
-```
+```python
     if not os.get_blocking(fd):
            ^^^^^^^^^^^^^^^^^^^
 OSError: [WinError 1] Incorrect function
