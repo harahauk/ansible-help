@@ -48,5 +48,6 @@ echo $?
 pipx install ansible-core
 pipx ensurepath
 bash
+#TODO: Manually add path first
 ansible-galaxy collection install community.general
 
