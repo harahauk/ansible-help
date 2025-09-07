@@ -2,7 +2,7 @@
 Ansible - Installation and execution help
 =========================================
 
-NOTE: This repo is very young and not ready for general consumtion 
+**NOTE:** This repo is very young and `NOT` ready for general consumtion 
 
 You can call it a `cheatsheet` or "general-support" for my other modules. Most information is derived from the [official documentation](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) which is propably more than enough for most users.   
 This way I can also refer to some things I put/repeat in **all** my modules which isn't so easy to maintain.
