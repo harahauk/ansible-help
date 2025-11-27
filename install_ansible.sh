@@ -6,9 +6,9 @@
 # It's advisable to just take inspiration from the script and execute the commands yourself.
 ##
 decide_packager () {
-        # Set default
+        # Default to dnf
         packager=dnf
-        # Source OS-info
+        # Determine operating-system
         . /etc/os-release
         case "$ID" in
         "fedora" | "almalinux" | "rhel")
@@ -21,21 +21,24 @@ decide_packager () {
                 ;;
         *)
                 echo "ERROR: Your version of linux is not recognized by this script, so be sure to read the script and install your own packages"
-                echo "Will try to continue after you press <Enter>:"
+                echo "Will try to continue after you press <Enter>"
+                echo "If you don't know what you are doing please press <CTRL-C> instead or otherwise kill this session:"
                 read -n 1 -s -r -p ""
                 ;;
 		esac
         }
 decide_packager
 user=`whoami`
-# Python installed by dependencies
+# Dependencies: Make sure python3 and sshpass are installed
 if test "$user" != "root"
 then
+  echo "Escalating session to install 'python3' and 'sshpass':"
   sudo $packager python3-pip sshpass
 else
   $packager python3-pip sshpass
 fi
 #TODO: Try the package first, not the other way around
+#TODO: No reason to do it system-wide either, use the enviroment-variable sudouser to de-escalate
 sudo pip install pipx
 if test "$?" -eq 1
 then
