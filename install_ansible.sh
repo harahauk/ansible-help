@@ -6,7 +6,7 @@
 #
 # This script gets you ready to use Ansible and sources the installation outside of system packages to get an updated version.
 # It install two system packages: python3-pip and sshpass, but the rest is done with pipx to not break system packages.
-# 
+#
 ##
 
 decide_packager () {
@@ -51,12 +51,9 @@ then
 fi
 echo $?
 # Use pipx to not break system packages
-# TODO: Try to de-escalate if ran as root?
-pipx install ansible-core
-pipx ensurepath
-bash
-#TODO: Manually add path first
-ansible-galaxy collection install community.general
-ansible-galaxy collection install community.docker
+sudo -u $SUDO_USER pipx install ansible-core
+sudo -u $SUDO_USER pipx ensurepath
+sudo -u $SUDO_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install community.general
+sudo -u $SUDO_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install community.docker
 
 
