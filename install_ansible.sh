@@ -1,10 +1,14 @@
 #!/bin/sh
+
 ##
-# @author Harald Hauknes <harald@hauknes.org>
 #
-# This script gets you ready to use ansible, but it's a little rough around the edges still.
-# It's advisable to just take inspiration from the script and execute the commands yourself.
+# @author Harald Hauknes <harald (at) hauknes.org>
+#
+# This script gets you ready to use Ansible and sources the installation outside of system packages to get an updated version.
+# It install two system packages: python3-pip and sshpass, but the rest is done with pipx to not break system packages.
+# 
 ##
+
 decide_packager () {
         # Default to dnf
         packager=dnf
@@ -22,7 +26,7 @@ decide_packager () {
         *)
                 echo "ERROR: Your version of linux is not recognized by this script, so be sure to read the script and install your own packages"
                 echo "Will try to continue after you press <Enter>"
-                echo "If you don't know what you are doing please press <CTRL-C> instead or otherwise kill this session:"
+                echo "If you don't know what you are doing please press <CTRL-C> (recommended) instead or otherwise kill this session:"
                 read -n 1 -s -r -p ""
                 ;;
 		esac
@@ -53,4 +57,6 @@ pipx ensurepath
 bash
 #TODO: Manually add path first
 ansible-galaxy collection install community.general
+ansible-galaxy collection install community.docker
+
 
