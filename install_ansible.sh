@@ -17,7 +17,11 @@ decide_packager () {
         # Default to dnf
         packager=dnf
         # Determine operating-system
-        . /etc/os-release
+        if [ -f "/etc/os-release" ]; then
+          . /etc/os-release
+        else
+          echo "ERROR: Missing 'os-release'-file. Are you sure you are using Linux?"
+        fi
         case "$ID" in
         "fedora" | "almalinux" | "rhel")
                 echo "RHEL-based OS detected, will use 'dnf'"
@@ -28,9 +32,9 @@ decide_packager () {
                 packager="apt install -y"
                 ;;
         *)
-                echo "ERROR: Your version of linux is not recognized by this script, so be sure to read the script and install your own packages"
-                echo "Will try to continue after you press <Enter>"
-                echo "If you don't know what you are doing please press <CTRL-C> (recommended) instead or otherwise kill this session:"
+                echo "ERROR: Your version of linux is not recognized by this script, so be sure to read the script and install your own packages.."
+                echo "WARNING: This script will try to continue execution after you press <Enter>"
+                echo "If you don't know what this entails please press <CTRL-C> (RECOMMENDED) or otherwise kill this session/terminal."
                 read -n 1 -s -r -p ""
                 ;;
 		esac
