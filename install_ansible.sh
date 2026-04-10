@@ -1,14 +1,17 @@
 #!/bin/sh
 
 ##
-#
 # @author Harald Hauknes <harald (at) hauknes.org>
 #
-# This script gets you ready to use Ansible and sources the installation outside of system packages to get an updated version.
-# It install two system packages: python3-pip and sshpass, but the rest is done with pipx to not break system packages.
-#
+# This script gets you ready to use Ansible and sources most of the installation outside of
+# system packages. This is to get an updated version of Ansible and to not cause minimal
+# interfere with existing configuration of the system.
+# System packages installed by this script:
+# - python3-pip
+# The rest of the installation is done with pipx to not break system packages.
 ##
 
+# Determine package-manager
 decide_packager () {
         # Default to dnf
         packager=dnf
@@ -33,6 +36,7 @@ decide_packager () {
         }
 decide_packager
 user=`whoami`
+
 # Dependencies: Make sure python3 and sshpass are installed
 if test "$user" != "root"
 then
@@ -57,6 +61,3 @@ sudo -u $SUDO_USER pipx ensurepath
 sudo -u $SUDO_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install community.general
 sudo -u $SUDO_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install community.docker
 sudo -u $SUDO_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install ansible.posix
-
-
-
