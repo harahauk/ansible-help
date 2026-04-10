@@ -8,6 +8,7 @@
 # interfere with existing configuration of the system.
 # System packages installed by this script:
 # - python3-pip
+# - sshpass
 # The rest of the installation is done with pipx to not break system packages.
 ##
 

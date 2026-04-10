@@ -27,7 +27,7 @@ existed in the first place. The error is identified by:
 OSError: [WinError 1] Incorrect function
 ```
 
-Someone has went to the trouble of making a package that works better:
+Someone has went to the trouble of making a package that works better:  
 `pipx install --include-deps ansible-vault-win`  
 This propably works using regular old `pip` too, but I'm using `pipx`at the moment so there you go.
 Still struggling with playbooks, but I'll figure it out..
