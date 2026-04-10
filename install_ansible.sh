@@ -53,7 +53,10 @@ echo $?
 # Use pipx to not break system packages
 sudo -u $SUDO_USER pipx install ansible-core
 sudo -u $SUDO_USER pipx ensurepath
+# Add the most used collections of ansible-modules to the Ansible-installation
 sudo -u $SUDO_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install community.general
 sudo -u $SUDO_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install community.docker
+sudo -u $SUDO_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install ansible.posix
+
 
 
