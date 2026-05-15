@@ -41,28 +41,34 @@ decide_packager () {
         }
 decide_packager
 user=`whoami`
-
 # Dependencies: Make sure python3 and sshpass are installed
 if test "$user" != "root"
 then
-  echo "Escalating session to install 'python3' and 'sshpass':"
+  echo "INFO: Escalating your session to install 'python3' and 'sshpass' using distribution package-manager:"
   sudo $packager python3-pip sshpass
 else
   $packager python3-pip sshpass
 fi
-#TODO: Try the package first, not the other way around
-#TODO: No reason to do it system-wide either, use the enviroment-variable sudouser to de-escalate
-sudo pip install pipx
+# If script is ran with unprivileged user, remove the content of the user-swapping variable
+CHANGE_USER="$CHANGE_USER "
+if [ -z "$SUDO_USER" ]; then
+    CHANGE_USER=""
+    SUDO_USER=$user
+    echo "INFO: Unprivileged run detected, installation will continue as '$user'"
+fi
+# Installing 'pipx'
+$CHANGE_USER pip install pipx
+# TODO: Consistent if-syntax
 if test "$?" -eq 1
 then
-  echo Broken packages-warning? Will try to install pipx-package
+  echo "ERROR: 'pipx'-installation appear to have failed. Assuming 'Broken packages-warning' - Will try to install 'pipx'-package using distribution package-manager:"
   sudo $packager pipx
 fi
 echo $?
 # Use pipx to not break system packages
-sudo -u $SUDO_USER pipx install ansible-core
-sudo -u $SUDO_USER pipx ensurepath
+$CHANGE_USER pipx install ansible-core
+$CHANGE_USER pipx ensurepath
 # Add the most used collections of ansible-modules to the Ansible-installation
-sudo -u $SUDO_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install community.general
-sudo -u $SUDO_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install community.docker
-sudo -u $SUDO_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install ansible.posix
+$CHANGE_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install community.general
+$CHANGE_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install community.docker
+$CHANGE_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install ansible.posix
