@@ -59,13 +59,17 @@ fi
 #
 # If script is ran with unprivileged user, remove the content of the user-swapping variable
 CHANGE_USER="sudo -u $SUDO_USER "
-if [ -z "$SUDO_USER" ]; then
+INSTALLPATH="/home/$user"
+if [ "$user" == "root" ]; then
+    CHANGE_USER=""
+    INSTALLPATH="/root"
+elif [ -z "$SUDO_USER" ]; then
     CHANGE_USER=""
     SUDO_USER=$user
     echo -e "$C_GREEN""INFO$C_NC: Unprivileged run detected, installation will continue as '$user'"
 fi
 # Installing 'pipx', used to not interfere with pip or packages installed via package-manager
-$CHANGE_USER pip install pipx
+$CHANGE_USER pip install --user pipx
 # TODO: Consistent if-syntax
 if test "$?" -eq 1
 then
@@ -73,11 +77,11 @@ then
   sudo $packager pipx
 fi
 echo -e "$C_RED""DEBUG$C_NC: '$?'"
-$CHANGE_USER /home/$SUDO_USER/.local/bin/pipx install ansible-core
+$CHANGE_USER $INSTALLPATH/.local/bin/pipx install ansible-core
 # Add the most used collections of ansible-modules to the Ansible-installation
-$CHANGE_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install community.general
-$CHANGE_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install community.docker
-$CHANGE_USER /home/$SUDO_USER/.local/bin/ansible-galaxy collection install ansible.posix
+$CHANGE_USER $INSTALLPATH/.local/bin/ansible-galaxy collection install community.general
+$CHANGE_USER $INSTALLPATH/.local/bin/ansible-galaxy collection install community.docker
+$CHANGE_USER $INSTALLPATH/.local/bin/ansible-galaxy collection install ansible.posix
 # Doubt this changes anything, but does not harm either
-$CHANGE_USER /home/$SUDO_USER/.local/bin/pipx ensurepath
+$CHANGE_USER $INSTALLPATH/.local/bin/pipx ensurepath
 echo -e "$C_GREEN""INFO$C_NC: '$C_YEL""install_ansible.sh$C_NC' has finished, test commands like 'ansible', 'ansible-playbook' or 'ansible-galaxy' to verify installation success"
