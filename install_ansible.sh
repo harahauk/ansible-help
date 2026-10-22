@@ -77,7 +77,7 @@ then
   sudo $packager pipx
 fi
 echo -e "$C_RED""DEBUG$C_NC: '$?'"
-$CHANGE_USER $INSTALLPATH/.local/bin/pipx install ansible-core
+$CHANGE_USER $INSTALLPATH/.local/bin/pipx install ansible-core ansible-vault
 # Add the most used collections of ansible-modules to the Ansible-installation
 $CHANGE_USER $INSTALLPATH/.local/bin/ansible-galaxy collection install community.general
 $CHANGE_USER $INSTALLPATH/.local/bin/ansible-galaxy collection install community.docker
